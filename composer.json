@@ -31,7 +31,7 @@
             "Emarketa\\AdvancedLogger\\": "src/AdvancedLogger"
         },
         "files": [
-            "registration.php"
+            "src/AdvancedLogger/registration.php"
         ]
     }
 }
