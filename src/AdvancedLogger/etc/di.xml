@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Emarketa\AdvancedLogger\Model\Api\Record\ElasticsearchClientInterface" type="Emarketa\AdvancedLogger\Model\Elastic\Record\Client"/>
+    <preference for="Emarketa\AdvancedLogger\Model\Api\Record\DatadogHttpInterface" type="Emarketa\AdvancedLogger\Model\Datadog\Record\HttpClient"/>
+    <type name="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">main</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Magento\Framework\Logger\Handler\System</item>
+                <item name="debug" xsi:type="object">Magento\Framework\Logger\Handler\Debug</item>
+                <item name="syslog" xsi:type="object">Magento\Framework\Logger\Handler\Syslog</item>
+                <item name="elasticsearch" xsi:type="object">Emarketa\AdvancedLogger\Logger\Handler\System\Elasticsearch</item>
+                <item name="datadog_http" xsi:type="object">Emarketa\AdvancedLogger\Logger\Handler\System\DatadogHttp</item>
+                <item name="datadog_file" xsi:type="object">Emarketa\AdvancedLogger\Logger\Handler\System\DatadogFile</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
