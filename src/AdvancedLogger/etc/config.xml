@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <advanced_logger>
+            <elasticsearch>
+                <enabled>0</enabled>
+                <enabled_in_developer_mode>0</enabled_in_developer_mode>
+                <index_suffix><![CDATA[]]></index_suffix>
+                <acceptable_level>300</acceptable_level>
+                <connection>
+                    <!-- For multiple hosts, use comma separated string of [host]:[port] -->
+                    <!-- Example: bin/magento config:set advanced_logger/elasticsearch/hosts 1.2.3.4:9200,5.6.7.8:9200 -->
+                    <!-- For HTTP Auth use the following format: http://user:pass@localhost:9200 -->
+                    <!-- For SSL the following format: https://localhost:9200 -->
+                    <hosts>localhost:9200</hosts>
+
+                    <!-- You can apply extra security by using the example config paths below. DO NOT USE THIS FILE -->
+                    <!-- See: https://www.elastic.co/guide/en/elasticsearch/client/php-api/current/security.html#security -->
+                    <!--
+                    For API credentials use:
+                        bin/magento config:set advanced_logger/elasticsearch/api/id your_id
+                        bin/magento config:set advanced_logger/elasticsearch/api/key your_key
+
+                    If you need to read a Certificate Authority file:
+                        bin/magento config:set advanced_logger/elasticsearch/cafile /full/path/to/ca.pem
+                    -->
+                </connection>
+            </elasticsearch>
+            <datadog>
+                <ddtags>
+                    <env><![CDATA[]]></env>
+                    <owner><![CDATA[]]></owner>
+                </ddtags>
+                <http_endpoint>
+                    <enabled>0</enabled>
+                    <enabled_in_developer_mode>0</enabled_in_developer_mode>
+                    <acceptable_level>300</acceptable_level>
+                    <account_region>EU</account_region>
+                    <intake_url>
+                        <USA><![CDATA[https://http-intake.logs.datadoghq.com/v1/]]></USA>
+                        <EU><![CDATA[https://http-intake.logs.datadoghq.eu/v1/]]></EU>
+                    </intake_url>
+                    <api_key><![CDATA[]]></api_key>
+                </http_endpoint>
+                <file>
+                    <enabled>0</enabled>
+                    <enabled_in_developer_mode>0</enabled_in_developer_mode>
+                    <acceptable_level>300</acceptable_level>
+                </file>
+            </datadog>
+        </advanced_logger>
+    </default>
+</config>

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="emarketa" translate="label" sortOrder="600">
+            <label>Emarketa</label>
+        </tab>
+        <section id="advanced_logger" translate="label" sortOrder="9999" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Advanced Logger</label>
+            <tab>emarketa</tab>
+            <resource>Emarketa_AdvancedLogger::advanced_logger_config</resource>
+            <group id="elasticsearch" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Elasticsearch</label>
+                <attribute type="expanded">1</attribute>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Elasticsearch Logger</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enabled_in_developer_mode" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled in Developer Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="acceptable_level" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Minimum Level</label>
+                    <source_model>Emarketa\AdvancedLogger\Model\Config\Source\ErrorLevels</source_model>
+                    <comment><![CDATA[
+                    <strong>NOTE:</strong> Setting below level "WARNING" could use up a lot of space very quickly and make a systems administrator very upset!
+                    <br><br>
+                    Policy endpoints are coming soon in Magento 2.3.5 where maximum size and expiry times can be set. These options will be added to the module in a future version.
+                    ]]></comment>
+                </field>
+                <field id="index_suffix" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Index Label Suffix</label>
+                    <comment>This will be used in your index name. The word "default" is used as the suffix if left empty. Alphanumeric only and no spaces.</comment>
+                </field>
+                <group id="connection" translate="label"  sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Connection</label>
+                    <field id="hosts" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Hosts</label>
+                        <comment><![CDATA[
+                        In the following format: <code>host:port,host:port</code>.<br>Separate hosts with a comma but without spaces.
+                        <br><br>
+                        For HTTP Auth use the following format: <code>http://user:pass@1.2.3.4:9200</code><br>
+                        For SSL the following format: <code>https://1.2.3.4:9200</code>
+                        ]]></comment>
+                    </field>
+                </group>
+            </group>
+            <group id="datadog" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Datadog</label>
+                <attribute type="expanded">1</attribute>
+                <group id="file" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Logs via Agent</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enabled</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[
+                            You will need to install the datadog agent on your server and configure the path to <code>/path/to/magento/var/log/datadog.log.json</code><br><br>
+                            Warning: If you enable http and file at the same time and have a running datadog agent linked to the same account, you will get every log twice in your account.
+                            <br><br>
+                            This example should get you going: <a target="_blank" href="https://docs.datadoghq.com/logs/log_collection/php/?tab=phpmonolog#agent-configuration">https://docs.datadoghq.com/logs/log_collection/php/?tab=phpmonolog#agent-configuration</a>
+                        ]]>
+                        </comment>
+                    </field>
+                    <field id="enabled_in_developer_mode" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enabled in Developer Mode</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[
+                            It's strongly advised you do not enable this in developer mode as you will be charged for the storage. But if you really must then here's the option to do that.
+                        ]]></comment>
+                    </field>
+                    <field id="acceptable_level" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Minimum Level</label>
+                        <source_model>Emarketa\AdvancedLogger\Model\Config\Source\ErrorLevels</source_model>
+                        <comment><![CDATA[
+                        <strong>NOTE:</strong> Setting below level "WARNING" could potentially create a large amount of records which could substantially increase your costs.
+                        ]]></comment>
+                    </field>
+                </group>
+                <group id="http_endpoint" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Logs via HTTP API</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enabled</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[
+                            This is only intended for temporary use during a problem as many records will potentially slow your site down. This works without any further technical setup on the server but does have drawbacks as it uses a curl request which is set to time out at 120ms.<br><br>
+                            Warning: If you enable http and file at the same time and have a running datadog agent linked to the same account, you will get every log twice in your account.
+                        ]]>
+                        </comment>
+                    </field>
+                    <field id="enabled_in_developer_mode" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enabled in Developer Mode</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment>It's strongly advised you do not enable this in developer mode as you will be charged for the storage. But if you really must then here's the option to do that.</comment>
+                    </field>
+                    <field id="acceptable_level" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Minimum Level</label>
+                        <source_model>Emarketa\AdvancedLogger\Model\Config\Source\ErrorLevels</source_model>
+                        <comment><![CDATA[
+                        <strong>NOTE:</strong> Setting below level "WARNING" could potentially create a large amount of records which could substantially increase your costs.
+                        ]]></comment>
+                    </field>
+                    <field id="account_region" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Account Region</label>
+                        <source_model>Emarketa\AdvancedLogger\Model\Config\Source\Datadog\Location</source_model>
+                        <comment>If unsure, log into your dashboard and look to see if you are at https://app.datadoghq.eu/ or https://app.datadoghq.com/.</comment>
+                    </field>
+                    <field id="api_key" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>API Key</label>
+                        <comment><![CDATA[
+                            For EU accounts your API keys are available <a target="_blank" href="https://app.datadoghq.eu/account/settings#api">here</a><br>
+                            For US accounts your API keys are available <a target="_blank" href="https://app.datadoghq.com/account/settings#api">here</a>
+                        ]]>
+                        </comment>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>
