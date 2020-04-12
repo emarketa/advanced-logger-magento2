@@ -4,7 +4,7 @@
     "license": "GPL-3.0",
     "type": "magento2-module",
     "homepage": "https://github.com/emarketa/advanced-logger-magento2",
-    "description": "Magento 2 module sends logs to Elasticsearch or Datadog.",
+    "description": "Magento 2 module. Sends logs to Elasticsearch or Datadog.",
     "keywords": [
         "composer-installer",
         "magento",
