@@ -21,7 +21,9 @@ use Monolog\Logger;
  */
 class DatadogHttp extends Base
 {
-    const CONFIG_ENABLED = 'advanced_logger/datadog/http_endpoint/enabled';
+    const CONFIG_HTTP_ENABLED = 'advanced_logger/datadog/http_endpoint/httpenabled';
+    const CONFIG_CRON_ENABLED = 'advanced_logger/datadog/http_endpoint/cronenabled';
+    const CONFIG_CRON_MAX = 'advanced_logger/datadog/http_endpoint/cronmax';
     const CONFIG_DEV_MODE_ENABLE = 'advanced_logger/datadog/http_endpoint/enabled_in_developer_mode';
     const CONFIG_ACCEPTABLE_LEVEL = 'advanced_logger/datadog/http_endpoint/acceptable_level';
 
@@ -85,19 +87,39 @@ class DatadogHttp extends Base
      */
     public function isHandling(array $record)
     {
-        return $this->isEnabled() &&
+        return $this->isHttpEnabled() &&
             $this->getDeveloperModePolicyResult() &&
             ($record['level'] >= $this->getMinimumLevel());
     }
 
     /**
-     * Method isEnabled
+     * Method isHttpEnabled
      *
      * @return bool
      */
-    public function isEnabled()
+    public function isHttpEnabled()
     {
-        return (bool) (int) $this->config->getValue(self::CONFIG_ENABLED);
+        return (bool) (int) $this->config->getValue(self::CONFIG_HTTP_ENABLED);
+    }
+
+    /**
+     * Method isHttpEnabled
+     *
+     * @return bool
+     */
+    public function isCronEnabled(): bool
+    {
+        return (bool) (int) $this->config->getValue(self::CONFIG_CRON_ENABLED);
+    }
+
+    /**
+     * Method getCronMaxRecords
+     *
+     * @return int
+     */
+    public function getCronMaxRecords(): int
+    {
+        return (int) $this->config->getValue(self::CONFIG_CRON_MAX);
     }
 
     /**

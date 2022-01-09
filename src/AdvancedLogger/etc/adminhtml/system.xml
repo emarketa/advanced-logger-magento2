@@ -50,15 +50,19 @@
                 <label>Datadog</label>
                 <attribute type="expanded">1</attribute>
                 <group id="file" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Send Logs via Agent</label>
+                    <attribute type="expanded">1</attribute>
+                    <label>Write Logs To JSON file</label>
                     <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Enabled</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                         <comment><![CDATA[
-                            You will need to install the datadog agent on your server and configure the path to <code>/path/to/magento/var/log/datadog.log.json</code><br><br>
-                            Warning: If you enable http and file at the same time and have a running datadog agent linked to the same account, you will get every log twice in your account.
+                            You can either use the datadog agent or enable the cron task in the next section to send via the http API.
+
                             <br><br>
-                            This example should get you going: <a target="_blank" href="https://docs.datadoghq.com/logs/log_collection/php/?tab=phpmonolog#agent-configuration">https://docs.datadoghq.com/logs/log_collection/php/?tab=phpmonolog#agent-configuration</a>
+                            To use the agent, configure the path to <code>/path/to/magento/var/log/datadog.log.json</code><br><br>
+
+                            <br><br>
+                            For the datadog agent, this example should get your sys admin going: <a target="_blank" href="https://docs.datadoghq.com/logs/log_collection/php/?tab=phpmonolog#agent-configuration">https://docs.datadoghq.com/logs/log_collection/php/?tab=phpmonolog#agent-configuration</a>
                         ]]>
                         </comment>
                     </field>
@@ -79,12 +83,18 @@
                 </group>
                 <group id="http_endpoint" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Send Logs via HTTP API</label>
-                    <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                        <label>Enabled</label>
+                    <field id="cronenabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Send via Cron</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                         <comment><![CDATA[
-                            This is only intended for temporary use during a problem as many records will potentially slow your site down. This works without any further technical setup on the server but does have drawbacks as it uses a curl request which is set to time out at 120ms.<br><br>
-                            Warning: If you enable http and file at the same time and have a running datadog agent linked to the same account, you will get every log twice in your account.
+                            "Write Logs To JSON file" (above) needs to be enabled. The cron will clear the file after each successful send to keep the request sizes to a minimum; this file is not intended as an archive.
+                        ]]>
+                        </comment>
+                    </field>
+                    <field id="cronmax" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Record Send Limit</label>
+                        <comment><![CDATA[
+                            Limit the number of logs sent to datadog. The cron runs every minute and makes a request per log line. Here, you can set the max number of lines sent to datadog.
                         ]]>
                         </comment>
                     </field>
@@ -108,8 +118,17 @@
                     <field id="api_key" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>API Key</label>
                         <comment><![CDATA[
-                            For EU accounts your API keys are available <a target="_blank" href="https://app.datadoghq.eu/account/settings#api">here</a><br>
-                            For US accounts your API keys are available <a target="_blank" href="https://app.datadoghq.com/account/settings#api">here</a>
+                            For EU accounts your API keys are available <a target="_blank" href="https://app.datadoghq.eu/organization-settings/api-keys">here</a><br>
+                            For US accounts your API keys are available <a target="_blank" href="https://app.datadoghq.com/organization-settings/api-keys">here</a>
+                        ]]>
+                        </comment>
+                    </field>
+                    <field id="httpenabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Send Logs Individually</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[
+                            NOT RECOMMENDED FOR PRODUCTION. This is only intended for temporary use during a problem as many records will potentially slow your site down. This works without any further technical setup on the server but does have drawbacks as it uses a curl request which is set to time out at 1000ms.<br><br>
+                            Warning: If you enable http and file at the same time and have a running datadog agent or using the cron method linked to the same account, you will get every log twice in your account.
                         ]]>
                         </comment>
                     </field>

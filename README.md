@@ -1,6 +1,6 @@
 # Emarketa Advanced Logger
 
-### Version 0.3.0 (Beta) A module to send your Magento 2 logs to an Elasticsearch server or to Datadog.
+### Version 0.4.0 (Beta) A module to send your Magento 2 logs to an Elasticsearch server or to Datadog.
 
 This module was born from a need to centralise logs from multiple web nodes running a Magento 2 site. It currently has 3 solutions for sending logs to an external service for consumption and will capture just about everything the Monolog logger (which comes with Magento 2) handles.
 
@@ -81,7 +81,10 @@ You have 2 ways to send logs to Datadog:
 
 ### Via HTTP API
 
-* __Enabled:__ Because PHP is a blocking language and because PHP Curl hangs until it receives a response, you might be trading off the convenience of not having to set-up the Datadog agent with site performance. You could mitigate this issue further by raising the minimum level to _ERROR_. If debug logs are active and being sent to Datadog, even with the 120 ms time-out, you may experience substantial hangs on levels lower than _WARNING_. 
+* __Send via Cron:__ If you're unable to set up the Datadog agent on your host but you don't want to block the site in any way when sending logs, you can now use this feature to send logs every minute as part of the Magento cron. Note that this means there's up to a minute delay between the even and when the log is sent to Datadog. The cron will clear the file after each successful send to keep the request sizes to a minimum.
+
+
+* __Send Logs Individually:__ Because PHP is a blocking language and because PHP Curl hangs until it receives a response, you might be trading off the convenience of not having to set-up the Datadog agent with site performance. You could mitigate this issue further by raising the minimum level to _ERROR_. If debug logs are active and being sent to Datadog, even with the 120 ms time-out, you may experience substantial hangs on levels lower than _WARNING_. 
 
 > TIP: Really, this solution is probably most useful when you want to have some temporary insight into problems with a production cluster of web nodes or you may have it enabled on a staging environment to help audit a release.
 > 

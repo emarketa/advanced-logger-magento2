@@ -32,7 +32,8 @@
                     <owner><![CDATA[]]></owner>
                 </ddtags>
                 <http_endpoint>
-                    <enabled>0</enabled>
+                    <cronenabled>0</cronenabled>
+                    <cronmax>50</cronmax>
                     <enabled_in_developer_mode>0</enabled_in_developer_mode>
                     <acceptable_level>300</acceptable_level>
                     <account_region>EU</account_region>
@@ -41,6 +42,7 @@
                         <EU><![CDATA[https://http-intake.logs.datadoghq.eu/v1/]]></EU>
                     </intake_url>
                     <api_key><![CDATA[]]></api_key>
+                    <httpenabled>0</httpenabled>
                 </http_endpoint>
                 <file>
                     <enabled>0</enabled>
