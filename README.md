@@ -1,6 +1,6 @@
 # Emarketa Advanced Logger
 
-### Version 0.3.0 (Beta) A module to send your Magento 2 logs to an Elasticsearch server or to Datadog.
+### Version 0.4.0 (Beta) A module to send your Magento 2 logs to an Elasticsearch server or to Datadog.
 
 This module was born from a need to centralise logs from multiple web nodes running a Magento 2 site. It currently has 3 solutions for sending logs to an external service for consumption and will capture just about everything the Monolog logger (which comes with Magento 2) handles.
 
