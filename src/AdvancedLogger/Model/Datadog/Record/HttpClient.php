@@ -86,7 +86,7 @@ class HttpClient implements DatadogHttpInterface
         $curl->setTimeout(0);
         $curl->setOptions(
             [
-                CURLOPT_TIMEOUT_MS => 120,
+                CURLOPT_TIMEOUT_MS => 1000,
                 CURLOPT_RETURNTRANSFER => 1
             ]
         );

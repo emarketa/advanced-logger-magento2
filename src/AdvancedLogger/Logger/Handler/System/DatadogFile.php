@@ -121,4 +121,12 @@ class DatadogFile extends Base
         $enabledInDeveloperMode = (bool) (int) $this->config->getValue(self::CONFIG_DEV_MODE_ENABLE);
         return $isDeveloperMode ? $enabledInDeveloperMode : true;
     }
+
+    /**
+     * @return string
+     */
+    public function getFileName(): string
+    {
+        return $this->fileName;
+    }
 }
